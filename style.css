@@ -1,0 +1,120 @@
+:root {
+    --bg-color: #0c0c0c;
+    --text-color: #00ff41;
+    --prompt-color: #00ff41;
+    --secondary-color: #4f4f4f;
+    --error-color: #ff4141;
+    --font: 'Fira Code', monospace;
+}
+
+body[data-theme="amber"] {
+    --text-color: #FFB000;
+    --prompt-color: #FFB000;
+    --error-color: #FF4500;
+}
+body[data-theme="ice"] {
+    --bg-color: #010409;
+    --text-color: #4edaff;
+    --prompt-color: #4edaff;
+    --secondary-color: #3a6c9c;
+    --error-color: #ff7878;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(to right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    background-size: 100% 4px, 3px 100%;
+    z-index: 2;
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.9; }
+    100% { opacity: 1; }
+}
+
+.terminal {
+    position: relative;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+.terminal:focus {
+    outline: none;
+}
+
+#output {
+    display: flex;
+    flex-direction: column;
+}
+
+.output-line {
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+}
+.output-line strong {
+    font-weight: 500;
+}
+.output-line.response strong {
+    color: var(--prompt-color);
+}
+.output-line.command {
+    color: var(--prompt-color);
+}
+.output-line.error {
+    color: var(--error-color);
+}
+.output-line.info {
+    color: var(--secondary-color);
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: var(--prompt-color);
+    white-space: nowrap;
+}
+
+.input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: inherit;
+    padding-left: 10px;
+}
+.input:focus {
+    outline: none;
+    animation: blink-cursor 1s step-end infinite;
+}
+
+@keyframes blink-cursor {
+    from, to { border-right: 2px solid var(--text-color); }
+    50% { border-right-color: transparent; }
+}
